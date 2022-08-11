@@ -1,0 +1,23 @@
+1、创建数据库db，导入代码包中的db.sql
+2、修改代码中
+TestOnlinExam/TestOnlinExam/settings.py
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'HOST':'127.0.0.1',
+        'NAME': 'db',
+        'USER': 'root',
+        'PASSWORD': '123456',
+        'PORT': '3306',
+    }
+}
+修改成自己库地址
+
+3、pip install -r requirements.txt
+
+4、启动
+ python manage.py runserver
+ 
+ 
+5、访问 127.0.0.1:8080

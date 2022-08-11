@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/reset.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/animate.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <script src="{% static 'js/jquery.min.js' %}" type="text/javascript"></script>
+    <script src="{% static 'js/jquery-migrate-1.2.1.min.js' %}" type="text/javascript"></script>    
+    <script type="text/javascript">
+        function submitForm() {
+            document.getElementById("form1").submit();
+        }
+    </script>
+    <style>
+        .begin {
+            width: 200px;
+            margin: 0 auto;
+            font: 20px/32px "Micorosoft Yahei";
+        }
+
+        #box1 {
+            width: 600px;
+            margin: 20px auto;
+        }
+
+        #box1 p {
+            font-size: 18px;
+            margin-bottom: 4px;
+        }
+
+        #box1 lable {
+            font-size: 16px;
+            margin-bottom: 2px;
+        }
+
+        #box2 {
+            text-align: center;
+        }
+
+        .tj {
+            font-size: 16px;
+            margin: auto;
+        }
+
+
+    </style>
+</head>
+<body>
+
+<section class="headerwrap headerwrap2">
+    <header>
+        <div class="header2 header">
+
+            {% if request.user.is_authenticated %}
+                <div class="top">
+                    <div class="wp">
+                
+                					<!--登录后跳转-->
+                
+                                    <div class="personal">
+                                            <dl class="user fr">
+                                                <dd>{{ user.username }}</dd>
+                                                {% if user.role == 0 %}
+                                                <dd>教师, </dd>
+                                                {% else %}
+                                                <dd>学生, </dd>
+                                                {% endif %}
+                                            </dl>
+                                            <div class="userdetail">
+                                            	<dl>
+                
+                                                </dl>
+                                                <div class="btn">
+                	                                <a class="personcenter fl" href="/user_center/">进入个人中心</a>
+                	                                <a class="fr" href="{% url 'logout' %}">退出</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                				</div>
+                			    </div>
+                            {% else %}
+                                 <div class="top">
+                				<div class="wp">
+                					<!--登录后跳转-->
+
+
+                        <a style="color:white" class="fr registerbtn" href="{% url 'register' %}">注册</a>
+                        <a style="color:white" class="fr loginbtn" href="{% url 'login' %}">登录</a>
+                    </div>
+                </div>
+            {% endif %}
+
+        </div>
+    </header>
+</section>
+
+
+<div class="begin"><p>{{ paper_list_name }}</p></div>
+
+
+<div>
+
+    {% if request.user.is_authenticated %}
+        <session>
+            <form action="" method="POST" id="form1" name="hhhhh">
+                {% csrf_token %}
+                {% for question_now in question %}
+
+                    <div id="box1">
+                        <from id="{{ question_now.0 }}">
+
+                            <p>{{ forloop.counter }}. {{ question_now.4 }}</p>
+                            
+                            <p>题目分数： {{ question_now.3 }}</p>
+                            <p>题目标准答案： {{ question_now.5 }}</p>
+                            <p>题目用户答案： {{ question_now.2 }}</p>
+                            <input type="hidden" name="answerlog_id" value="{{ question_now.1 }}">
+                            <p>评分：<input type="number" name="{{ question_now.1 }}" /></p>
+
+                            <!--
+                            <input type="hidden" value="{{ question_now.id }}">
+                            <label><input name="{{ question_now.id }}" type="radio"
+                                          value="A"/>{{ question_now.choice_a }}
+                            </label><br/>
+                            <label><input name="{{ question_now.id }}" type="radio"
+                                          value="B"/>{{ question_now.choice_b }}
+                            </label><br/>
+                            <label><input name="{{ question_now.id }}" type="radio"
+                                          value="C"/>{{ question_now.choice_c }}
+                            </label><br/>
+                            <label><input name="{{ question_now.id }}" type="radio"
+                                          value="D"/>{{ question_now.choice_d }}
+                            </label><br/>-->
+                        </from> 
+
+ 
+
+                    </div>
+
+                    <hr/>
+                {% endfor %}
+                <div id="box2">
+                    <input type="submit" value="提交" id="tj" class="tj"/>
+                </div>
+
+            </form>
+
+        </session>
+    {% else %}
+        <div>
+            <script type="text/javascript">
+                alert("请登录！！！");
+            </script>
+            <h1> 亲，想做题，先登录奥！</h1>
+
+        </div>
+
+    {% endif %}
+
+</div>
+
+
+
+<script src="{% static 'js/selectUi.js' %}" type='text/javascript'></script>
+<script src="{% static 'js/deco-common.js' %}" type='text/javascript'></script>
+<script src="{% static 'js/plugins/laydate/laydate.js' %}" type="text/javascript"></script>
+<script src="{% static 'js/plugins/layer/layer.js' %}"></script>
+<script src="{% static 'js/plugins/queryCity/js/public.js' %}" type="text/javascript"></script>
+<script src="{% static 'js/unslider.js' %}" type="text/javascript"></script>
+<script src="{% static 'js/plugins/jquery.scrollLoading.js' %}" type="text/javascript"></script>
+<script src="{% static 'js/deco-common.js' %}" type="text/javascript"></script>
+<script type="text/javascript" src="{% static 'js/index.js' %}"></script>
+</body>
+</html>
